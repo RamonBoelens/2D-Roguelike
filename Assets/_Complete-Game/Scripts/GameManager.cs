@@ -155,6 +155,11 @@ namespace Completed
             Debug.Log("Open buying screen");
             buyScreen.SetActive(true);
         }
+
+        public void closeBuyScreen()
+        {
+            buyScreen.SetActive(false);
+        }
 		
 		//Coroutine to move enemies in sequence.
 		IEnumerator MoveEnemies()

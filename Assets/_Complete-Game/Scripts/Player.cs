@@ -206,7 +206,6 @@ namespace Completed
             {
                 Debug.Log("Merchant detected");
                 merchantCol = true;
-                
             }
 
             //Check if the tag of the trigger collided with is Food.
@@ -248,6 +247,7 @@ namespace Completed
             if(other.tag == "Merchant")
             {
                 merchantCol = false;
+                GameManager.instance.closeBuyScreen();
             }
         }
 

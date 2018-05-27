@@ -13,11 +13,12 @@ namespace Completed
 		
 		private Animator animator;							//Variable of type Animator to store a reference to the enemy's Animator component.
 		private Transform target;							//Transform to attempt to move toward each turn.
-		private bool skipMove;								//Boolean to determine whether or not enemy should skip a turn or move this turn.
-		
-		
-		//Start overrides the virtual Start function of the base class.
-		protected override void Start ()
+		private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
+
+        public int hp = 1;
+
+        //Start overrides the virtual Start function of the base class.
+        protected override void Start ()
 		{
 			//Register this enemy with our instance of GameManager by adding it to a list of Enemy objects. 
 			//This allows the GameManager to issue movement commands.
@@ -94,5 +95,17 @@ namespace Completed
 			//Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
 			SoundManager.instance.RandomizeSfx (attackSound1, attackSound2);
 		}
-	}
+
+        public void DamageEnemy(int loss)
+        {
+          
+            //Subtract loss from hit point total.
+            hp -= loss;
+            Debug.Log(hp);
+            //If hit points are less than or equal to zero:
+            if (hp <= 0)
+                //Disable the gameObject.
+                gameObject.SetActive(false);
+        }
+    }
 }

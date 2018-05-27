@@ -9,8 +9,8 @@ namespace Completed
 	
 	public class GameManager : MonoBehaviour
 	{
-		public float levelStartDelay = 2f;						//Time to wait before starting level, in seconds.
-		public float turnDelay = 0.1f;							//Delay between each Player turn.
+		public float levelStartDelay = 0f;						//Time to wait before starting level, in seconds.
+		public float turnDelay = 0f;							//Delay between each Player turn.
 		public int playerFoodPoints = 100;						//Starting value for Player food points.
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
 		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
@@ -19,10 +19,11 @@ namespace Completed
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
-		private int level = 1;									//Current level number, expressed in game as "Day 1".
+		private int level = 2;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
-		private bool enemiesMoving;								//Boolean to check if enemies are moving.
+        private bool enemiesMoving;								//Boolean to check if enemies are moving.
 		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
+        private GameObject buyScreen;
 		
 		
 		
@@ -79,9 +80,13 @@ namespace Completed
 			
 			//Get a reference to our image LevelImage by finding it by name.
 			levelImage = GameObject.Find("LevelImage");
-			
-			//Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
-			levelText = GameObject.Find("LevelText").GetComponent<Text>();
+
+            buyScreen = GameObject.Find("BuyScreen");
+
+            buyScreen.SetActive(false);
+
+            //Get a reference to our text LevelText's text component by finding it by name and calling GetComponent.
+            levelText = GameObject.Find("LevelText").GetComponent<Text>();
 			
 			//Set the text of levelText to the string "Day" and append the current level number.
 			levelText.text = "Day " + level;
@@ -130,10 +135,10 @@ namespace Completed
 			//Add Enemy to List enemies.
 			enemies.Add(script);
 		}
-		
-		
-		//GameOver is called when the player reaches 0 food points
-		public void GameOver()
+
+
+        //GameOver is called when the player reaches 0 food points
+        public void GameOver()
 		{
 			//Set levelText to display number of levels passed and game over message
 			levelText.text = "After " + level + " days, you starved.";
@@ -144,6 +149,12 @@ namespace Completed
 			//Disable this GameManager.
 			enabled = false;
 		}
+
+        public void buyMerch()
+        {
+            Debug.Log("Open buying screen");
+            buyScreen.SetActive(true);
+        }
 		
 		//Coroutine to move enemies in sequence.
 		IEnumerator MoveEnemies()

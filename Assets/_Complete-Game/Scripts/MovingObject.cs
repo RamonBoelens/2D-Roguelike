@@ -119,5 +119,7 @@ namespace Completed
 		//OnCantMove will be overriden by functions in the inheriting classes.
 		protected abstract void OnCantMove <T> (T component)
 			where T : Component;
-	}
+
+        
+    }
 }
